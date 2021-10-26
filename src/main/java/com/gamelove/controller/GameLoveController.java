@@ -37,7 +37,7 @@ public class GameLoveController {
     }
 
 
-    //to unlove games
+    //to unlove games with love identifier
     @DeleteMapping("/deleteLove/{loveId}")
     void deleteLove(@PathVariable int loveId) {
         gameLoveService.deleteLove(loveId);
