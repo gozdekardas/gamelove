@@ -17,8 +17,6 @@ public class GameLoveController {
 
     @Autowired
     GameLoveService gameLoveService;
-    @PersistenceContext
-    EntityManager em;
 
     //fetch all games a player have loved.
     @GetMapping("/games/{userId}")
@@ -32,15 +30,20 @@ public class GameLoveController {
     @PostMapping("/addGameLove")
     public ResponseEntity<String> add(@RequestBody GameLove gameLove) {
 
-        int loveId = gameLoveService.saveLovedGame(gameLove);
-        return ResponseEntity.ok(loveId + " game loved by user");
+        int cnt = gameLoveService.checkIfExists(gameLove.getUserId(),gameLove.getGameId());
+
+        if(cnt == 0) {
+            int loveId = gameLoveService.saveLovedGame(gameLove);
+            return ResponseEntity.ok(loveId + ": id, game loved by user");
+        }else
+            return ResponseEntity.ok("game and user love already exists");
     }
 
 
     //to unlove games with love identifier
     @DeleteMapping("/deleteLove/{loveId}")
     void deleteLove(@PathVariable int loveId) {
-        gameLoveService.deleteLove(loveId);
+        gameLoveService.deleteFromLoved(loveId);
     }
 
 

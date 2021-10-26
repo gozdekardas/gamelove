@@ -26,9 +26,14 @@ public class GameLoveService {
         return gameLove.getLoveId();
     }
 
+    public int checkIfExists(int userId, int gameId) {
 
-    public void deleteLove(Integer loveId) {
-        repo.deleteById(loveId);
+        return repo.chechExist(userId,gameId);
+    }
+
+
+    public void deleteFromLoved(Integer loveId) {
+        repo.deleteFromLoved(loveId);
     }
 
     public List<Object[]>  getTopGames(int topLoved) {
